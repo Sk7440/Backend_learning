@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* Base navigation container */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: #ffffff;
+        border-bottom: 1px solid #e5e7eb;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+
+      /* Nav list layout */
+      nav ul {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        list-style: none;
+      }
+
+      /* Nav list items */
+      nav li {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Links and clickable elements */
+      nav a {
+        position: relative;
+        display: inline-block;
+        padding: 1.25rem 0.5rem;
+        color: #374151;
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        cursor: pointer;
+        user-select: none;
+        transition: color 0.2s ease;
+      }
+
+      /* Animated underline on hover */
+      nav a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 2px;
+        background-color: #111827; /* Dark accent for modern e-commerce */
+        transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      nav a:hover {
+        color: #111827;
+      }
+
+      nav a:hover::after,
+      nav a.active::after {
+        width: 100%;
+      }
+
+      nav a.active {
+        color: #111827;
+        font-weight: 600;
+      }
+
+      /* Accessible focus state for keyboard navigation */
+      nav a:focus-visible {
+        outline: 2px solid #2563eb;
+        outline-offset: 4px;
+        border-radius: 2px;
+      }
+
+      /* Responsive design for smaller screens */
+      @media (max-width: 640px) {
+        nav ul {
+          gap: 1rem;
+          padding: 0 1rem;
+          overflow-x: auto;
+          white-space: nowrap;
+          justify-content: flex-start;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none; /* Hide scrollbar Firefox */
+        }
+
+        nav ul::-webkit-scrollbar {
+          display: none; /* Hide scrollbar Chrome/Safari */
+        }
+
+        nav a {
+          padding: 1rem 0.25rem;
+          font-size: 0.875rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav aria-label="Main Navigation">
+      <ul>
+        <li><a href="/" class="active">Home</a></li>
+        <li>
+          <a role="button" tabindex="0" onclick="fetchData('/about')">About</a>
+        </li>
+        <li>
+          <a role="button" tabindex="0" onclick="fetchData('/contact')"
+            >Contact</a
+          >
+        </li>
+        <li>
+          <a role="button" tabindex="0" onclick="fetchData('/products')"
+            >Products</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <script>
+      async function fetchData(path) {
+        try {
+          const response = await fetch(`http://localhost:5000${path}`);
+          console.log(response);
+              if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+      fetchData("/");
+    </script>
+  </body>
+</html>
