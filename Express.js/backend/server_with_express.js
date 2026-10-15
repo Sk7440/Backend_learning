@@ -1,5 +1,5 @@
 const express = require('express')
-const app  = express()
+const app = express()
 const cors = require('cors')
 app.use(cors({
 }))
@@ -7,30 +7,29 @@ app.use(express.json())
 
 const todos = []
 
-app.get('/', (req,res)=>{
+app.get('/', (req, res) => {
     res.send('home route hit')
 })
-app.delete('/users', (req,res)=>{
+app.delete('/todos', (req, res) => {
     console.log(req.body);
-    
+
     res.json(req.body)
 })
-app.get('/users', (req,res)=>{
+app.get('/todos', (req, res) => {
     console.log(req.body);
-    
+
     res.send('home route hit')
 })
-app.post('/users', (req,res)=>{
+app.post('/todos', (req, res) => {
     console.log(req.body);
-    
-    // res.send('home route hit')
+
 
     res.json(req.body)
 
 })
 
 
-app.listen(5000, ()=>{
+app.listen(5000, () => {
     console.log('server is running');
-    
+
 })
