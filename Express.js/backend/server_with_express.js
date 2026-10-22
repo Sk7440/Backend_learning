@@ -1,35 +1,41 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
-app.use(cors({
-}))
-app.use(express.json())
+const express = require("express");
+const app = express();
+const cors = require("cors");
+app.use(cors({}));
+app.use(express.json());
 
-const todos = []
+const todos = [];
 
-app.get('/', (req, res) => {
-    res.send('home route hit')
-})
-app.delete('/todos', (req, res) => {
-    console.log(req.body);
+app.get("/", (req, res) => {
+  res.send("home route hit");
+});
+app.delete("/todos", (req, res) => {
+  // const targetIndex = Number(req.body.index);
 
-    res.json(req.body)
-})
-app.get('/todos', (req, res) => {
-    console.log(req.body);
+  // if (isNaN(targetIndex) || targetIndex < 0 || targetIndex >= todos.length) {
+  //   return res.status(400).json({ error: "Invalid index" });
+  // }
 
-    res.send('home route hit')
-})
-app.post('/todos', (req, res) => {
-    console.log(req.body);
+  // todos.splice(targetIndex, 1);
 
 
-    res.json(req.body)
+  res.json({
+    message: "Todo deleted successfully",
+    todos: todos,
+  });
+});
+app.get("/todos", (req, res) => {
+  console.log(req.body);
 
-})
+  res.send("home route hit");
+});
+app.post("/todos", (req, res) => {
+  console.log(req.body);
 
+  todos.push(req.body);
+  res.json(todos);
+});
 
 app.listen(5000, () => {
-    console.log('server is running');
-
-})
+  console.log("server is running");
+});
