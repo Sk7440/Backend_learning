@@ -6,19 +6,29 @@ app.use(express.json());
 
 let todos = [];
 
-app.get("/", (req, res) => {
-  res.send("home route hit");
+app.patch("/todos", (req, res) => {
+  todos = todos.map((ele, idx) => {
+    if (idx==req.body.click) {
+      return req.body.todos
+    }
+    else{
+      return ele
+    }
+  });
+
+
+  // console.log(req.body);
+  // console.log(todos);
+  res.json({todos})
 });
 app.delete("/todos", (req, res) => {
-todos= todos.filter((ele, idx) => idx !== req.body.index);
-  
+  todos = todos.filter((ele, idx) => idx !== req.body.index);
 
   res.json({
     todos,
   });
 });
 app.get("/todos", (req, res) => {
-
   res.json({
     todos,
   });

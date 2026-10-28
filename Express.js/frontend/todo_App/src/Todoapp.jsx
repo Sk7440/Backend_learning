@@ -6,33 +6,35 @@ function Todoapp() {
 
   const [loading, setLoading] = useState(false);
   const [todos, setTodos] = useState({ task1: "" });
-  const [click,setClick]=useState(false)
+  const [click, setClick] = useState(null);
   function handleChange(e) {
     setTodos({ task1: e.target.value });
   }
   async function postData() {
-    setClick(false)
+    if (click) {
+      patch();
+    } else {
+      try {
+        setLoading(true);
+        const response = await fetch("http://localhost:5000/todos", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(todos),
+        });
+        if (!response.ok) {
+          toast.error("Something went wrong");
+        }
+        const data = await response.json();
+        console.log(data);
 
-    try {
-      setLoading(true);
-      const response = await fetch("http://localhost:5000/todos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(todos),
-      });
-      if (!response.ok) {
+        setDataToShow(data);
+      } catch (error) {
         toast.error("Something went wrong");
+      } finally {
+        setLoading(false);
       }
-      const data = await response.json();
-      console.log(data);
-
-      setDataToShow(data);
-    } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
-      setLoading(false);
     }
   }
   async function deleteData(index) {
@@ -75,13 +77,33 @@ function Todoapp() {
     fetchData();
   }, []);
   function editData(index) {
-    setClick(true)
+    setClick(index);
     let data = dataToShow.find((ele, idx) => {
       return idx == index;
     });
     if (data) {
       setTodos({ task1: data.task1 });
     }
+  }
+  function patch() {
+    async function patchData() {
+      try {
+        const response = await fetch("http://localhost:5000/todos", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ click, todos }),
+        });
+        const data = await response.json();
+        setDataToShow(data.todos);
+      } catch (error) {
+        toast.error("Something went wrong");
+      } finally {
+        setLoading(false);
+      }
+    }
+    patchData();
   }
   return (
     <div>
@@ -90,7 +112,7 @@ function Todoapp() {
         type="text"
         onChange={(e) => handleChange(e)}
       />
-      <button onClick={() => postData()}>{click?"update":"submit"}</button>
+      <button onClick={() => postData()}>{click ? "update" : "submit"}</button>
 
       <div>
         {!loading ? (
