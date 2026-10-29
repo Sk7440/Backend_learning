@@ -8,14 +8,14 @@ import Homepage from "./pages/Homepage";
 function App() {
   return (
     <>
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
         <Routes>
           <Route path="/Home" element={<Home />} />
           <Route path="/" element={<Homepage/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/Signup" element={<Signup/>} />
         </Routes>
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
     </>
   );
 }
