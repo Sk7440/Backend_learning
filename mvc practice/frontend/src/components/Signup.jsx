@@ -1,28 +1,52 @@
 import React from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { homeContext } from "./Context";
 
 function Signup() {
+  const { login } = useContext(homeContext);
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirm: "",
+  });
+  const [error, setError] = useState("");
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.id]: e.target.value });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (form.password !== form.confirm) {
+      setError("Passwords do not match");
+      return;
+    }
+    login({ name: form.name, email: form.email });
+    navigate("/"); // back to Home, now logged in
+  };
+
   return (
     <>
       <body>
         <div class="signup-wrapper">
           <div class="signup-card">
             <Link to="/">
-            <button class="back-btn minimal">
-              <svg
-                viewBox="0 0 24 24"
-                width="18"
-                height="18"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-              </svg>
-              <span>Back</span>
-            </button>
+              <button class="back-btn minimal">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                <span>Back</span>
+              </button>
             </Link>
 
             <div class="header">
@@ -73,55 +97,59 @@ function Signup() {
               <span>or register with email</span>
             </div>
 
-            <form class="signup-form" onsubmit="event.preventDefault();">
-              <div class="form-group">
-                <label for="fullname">Full Name</label>
+            <form className="signup-form" onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="name">Full Name</label>
                 <input
                   type="text"
-                  id="fullname"
+                  id="name"
+                  value={form.name}
+                  onChange={handleChange}
                   placeholder="e.g. Ali Khan"
                   required
                 />
               </div>
-
-              <div class="form-group">
-                <label for="email">Email Address</label>
+              <div className="form-group">
+                <label htmlFor="email">Email Address</label>
                 <input
                   type="email"
                   id="email"
+                  value={form.email}
+                  onChange={handleChange}
                   placeholder="name@example.com"
                   required
                 />
               </div>
-
-              <div class="form-group">
-                <label for="password">Password</label>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
                 <input
                   type="password"
                   id="password"
+                  value={form.password}
+                  onChange={handleChange}
                   placeholder="Create a strong password"
                   required
                 />
               </div>
-
-              <div class="form-group">
-                <label for="confirm-password">Confirm Password</label>
+              <div className="form-group">
+                <label htmlFor="confirm">Confirm Password</label>
                 <input
                   type="password"
-                  id="confirm-password"
+                  id="confirm"
+                  value={form.confirm}
+                  onChange={handleChange}
                   placeholder="Re-enter your password"
                   required
                 />
               </div>
-
-              <div class="terms-group">
+              <div className="terms-group">
                 <input type="checkbox" id="terms" required />
-                <label for="terms">
+                <label htmlFor="terms">
                   I agree to the <a href="#">Terms & Conditions</a>
                 </label>
               </div>
-
-              <button type="submit" class="submit-btn">
+              {error && <p className="form-error">{error}</p>}
+              <button type="submit" className="submit-btn">
                 Create Account
               </button>
             </form>

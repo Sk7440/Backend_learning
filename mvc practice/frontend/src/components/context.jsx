@@ -1,15 +1,26 @@
-import { useState } from "react";
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 export const homeContext = createContext();
+
 export default function Homeprovider({ children }) {
-  const [currentUser, iscurrentUser] = useState([]);
+  const [currentUser, setCurrentUser] = useState(() => {
+    const saved = localStorage.getItem("currentUser");
+    return saved ? JSON.parse(saved) : null;
+  });
+
+  const login = (user) => {
+    setCurrentUser(user);
+    localStorage.setItem("currentUser", JSON.stringify(user));
+  };
+
+  const logout = () => {
+    setCurrentUser(null);
+    localStorage.removeItem("currentUser");
+  };
 
   return (
-    <>
-      <homeContext.Provider value={{ currentUser, iscurrentUser }}>
-        {children}
-      </homeContext.Provider>
-    </>
+    <homeContext.Provider value={{ currentUser, login, logout }}>
+      {children}
+    </homeContext.Provider>
   );
 }
