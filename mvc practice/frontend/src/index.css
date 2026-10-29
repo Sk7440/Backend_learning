@@ -4,11 +4,14 @@
   width: 100%;
   align-items: center;
   padding:1%;
+  color: white;
+  
   background-color: #0f172a;
 }
 
 .btn-group {
   display: flex;
+
   gap: 16px;
 }
 
@@ -51,6 +54,7 @@
   max-width: 480px;
   background-color: #ffffff;
   padding: 6px;
+
   border-radius: 12px;
   border: 1px solid #e2e8f0;
   background-color: #0f172a;
@@ -62,6 +66,7 @@
 /* Highlight the entire bar when the user focuses the field */
 .todo-input-container:focus-within {
   border-color: #6366f1;
+
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
@@ -71,8 +76,9 @@
   border: none;
   outline: none;
   padding: 10px 14px;
+  color: white;
+
   font-size: 15px;
-  color: #1e293b;
   background: transparent;
 }
 

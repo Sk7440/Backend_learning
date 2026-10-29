@@ -13,7 +13,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     login({ email: form.email });
-    navigate("/");
+    navigate("/Home");
   };
 
   return (

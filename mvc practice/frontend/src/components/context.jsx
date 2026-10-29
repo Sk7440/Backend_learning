@@ -16,6 +16,7 @@ export default function Homeprovider({ children }) {
   const logout = () => {
     setCurrentUser(null);
     localStorage.removeItem("currentUser");
+    navigate("/")
   };
 
   return (
