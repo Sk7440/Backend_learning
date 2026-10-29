@@ -23,6 +23,29 @@ function Signup() {
     }
     login({ name: form.name, email: form.email });
     navigate("/login");
+    async function postData() {
+      try {
+        setLoading(true);
+        const response = await fetch("http://localhost:5000/Signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        });
+        if (!response.ok) {
+          toast.error("Something went wrong");
+        }
+        const data = await response.json();
+        console.log(data);
+
+        setDataToShow(data);
+      } catch (error) {
+        toast.error("Something went wrong");
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   return (
@@ -48,8 +71,6 @@ function Signup() {
           <h2>Create an Account</h2>
           <p>Join us today! Enter your details below.</p>
         </div>
-
-       
 
         <div className="divider">
           <span>or register with email</span>
