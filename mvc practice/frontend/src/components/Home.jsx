@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import { homeContext } from "./Context";
 
 function Home() {
+  const { currentUser } = useContext(homeContext);
+  const navigate = useNavigate();
+
   const [task, setTask] = useState("");
   const [todos, setTodos] = useState([]);
 
   const addTask = () => {
-    const { currentUser } = useContext(homeContext);
-    const navigate = useNavigate();
     if (!currentUser) {
-      navigate("/Signup");
+      navigate("/Signup"); 
       return;
     }
-    if (task === "") return;
+    if (task.trim() === "") return;
     setTodos([...todos, { text: task }]);
     setTask("");
   };
