@@ -1,6 +1,7 @@
 .auth-wrapper {
   display: flex;
   justify-content: center;
+  width: 100%;
   align-items: center;
   padding:1%;
   background-color: #0f172a;
