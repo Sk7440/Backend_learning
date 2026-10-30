@@ -1,6 +1,7 @@
 const users = [];
 exports.signup = (req, res) => {
-  let {name, email, password} =  req.body
+  console.log(req.body);
+  let { name, email, password } = req.body
 
 
   if (

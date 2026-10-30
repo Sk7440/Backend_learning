@@ -5,10 +5,12 @@ import Login from "./components/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Signup from "./components/Signup";
 import Homepage from "./pages/Homepage";
+import { ToastContainer } from "react-toastify";
 function App() {
   return (
     <>
       {/* <BrowserRouter> */}
+      <ToastContainer/>
         <Routes>
           <Route path="/Home" element={<Home />} />
           <Route path="/" element={<Homepage/>} />

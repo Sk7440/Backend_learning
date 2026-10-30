@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { homeContext } from "./Context";
-
+import {toast} from "react-toastify"
 function Login() {
   const { login } = useContext(homeContext);
   const navigate = useNavigate();
@@ -14,6 +14,34 @@ function Login() {
     e.preventDefault();
     login({ email: form.email });
     navigate("/Home");
+     async function postData() {
+          try {
+            const response = await fetch("http://localhost:5000/api/auth/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+    
+              body: JSON.stringify(form),
+            });
+            if (!response.ok) {
+              toast.error("Something went wrong");
+            }
+            const data = await response.json();
+            toast(data.msg)
+            
+          
+            TransformStreamDefaultController
+            
+            console.log(data);
+          } catch (error) {
+            toast.error("Something went wrong");
+          } finally {
+            console.log("all ok");
+    
+          }
+        }
+        postData()
   };
 
   return (
